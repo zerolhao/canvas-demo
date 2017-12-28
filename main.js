@@ -147,6 +147,8 @@ function allTolls() {
     eraserEnable = true
     this.classList.add('active')
     pen.classList.remove('active')
+
+    closeColorList()
   }
   // 画笔
   var pen = document.getElementById('pen')
@@ -154,6 +156,8 @@ function allTolls() {
     eraserEnable = false
     this.classList.add('active')
     eraser.classList.remove('active')
+
+    closeColorList()
   }
 
   // 画笔颜色列表
@@ -178,6 +182,8 @@ function allTolls() {
   lineWidth.onclick = function() {
     var width = prompt("请输入画笔大小（比如：2、5、10）")
     setLineWidth(width)
+
+    closeColorList()
   }
   // 清空canvas
   var clear = document.getElementById('clear')
@@ -190,6 +196,8 @@ function allTolls() {
     */
     context.fillRect(0, 0, canvas.width, canvas.height)
     autoSetCanvasBgC() // 设置默认背景颜色，清空操作会将之前设置的背景色也清掉
+
+    closeColorList()
   }
 
   // 将图画下载
@@ -200,5 +208,7 @@ function allTolls() {
     a.href = url
     a.download = "name.jpg"
     a.click()
+
+    closeColorList()
   }
 }
