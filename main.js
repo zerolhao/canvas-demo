@@ -7,34 +7,70 @@ var lastPoint = { // 坐标
   x: undefined,
   y: undefined
 }
-
-canvas.onmousedown = function(e) {
-  var x = e.clientX
-  var y = e.clientY
-  using = true
-  if (eraserEnable) {
-    context.clearRect(x, y, 5, 5)
-  } else { // 更新坐标
-    lastPoint = {
-      "x": x,
-      "y": y
+// 特性检测，此检测是否支持触屏
+if (document.body.ontouchstart !== undefined) {
+  // 触屏设备
+  canvas.ontouchstart = function(e) {
+    console.log("touch start")
+    var x = e.touches[0].clientX
+    var y = e.touches[0].clientY
+    using = true
+    if (eraserEnable) {
+      context.clearRect(x, y, 5, 5)
+    } else { // 更新坐标
+      lastPoint = {
+        "x": x,
+        "y": y
+      }
     }
   }
-}
-canvas.onmousemove = function(e) {
-  var x = e.clientX
-  var y = e.clientY
-  if (!using) { return }
-  if (eraserEnable) {
-    context.clearRect(x - 5, y - 5, 10, 10)
-  } else {
-    drawLine(lastPoint.x, lastPoint.y, x, y)
-    lastPoint.x = x // 更新坐标
-    lastPoint.y = y
+  canvas.ontouchmove = function(e) {
+    console.log("touch move")
+    var x = e.touches[0].clientX
+    var y = e.touches[0].clientY
+    if (!using) { return }
+    if (eraserEnable) {
+      context.clearRect(x - 5, y - 5, 10, 10)
+    } else {
+      drawLine(lastPoint.x, lastPoint.y, x, y)
+      lastPoint.x = x // 更新坐标
+      lastPoint.y = y
+    } 
   }
-}
-canvas.onmouseup = function() {
-  using = false
+  canvas.ontouchend = function(e) {
+    console.log("touch end")
+    using = false
+  }
+} else {
+  // 非触屏设备
+  canvas.onmousedown = function(e) {
+    var x = e.clientX
+    var y = e.clientY
+    using = true
+    if (eraserEnable) {
+      context.clearRect(x, y, 5, 5)
+    } else { // 更新坐标
+      lastPoint = {
+        "x": x,
+        "y": y
+      }
+    }
+  }
+  canvas.onmousemove = function(e) {
+    var x = e.clientX
+    var y = e.clientY
+    if (!using) { return }
+    if (eraserEnable) {
+      context.clearRect(x - 5, y - 5, 10, 10)
+    } else {
+      drawLine(lastPoint.x, lastPoint.y, x, y)
+      lastPoint.x = x // 更新坐标
+      lastPoint.y = y
+    }
+  }
+  canvas.onmouseup = function() {
+    using = false
+  }
 }
 // 橡皮擦
 var eraserEnable = false
@@ -45,6 +81,16 @@ eraser.onclick = function() {
 
 /******工具函数******/
 
+// 默认设置canvas宽高
+function autoSetCanvasSize() {
+  // 获取页面宽高
+  var pageWith = document.documentElement.clientWidth
+  var pageHeight = document.documentElement.clientHeight
+  // 设置宽高，这时候设置的是 <canvas> 的属性值，而不是样式里的宽高
+  canvas.width = pageWith
+  canvas.height = pageHeight
+}
+
 // 画线条
 function drawLine(lastX, lastY, newX, newY) {
   context.beginPath() // 新建路径
@@ -54,14 +100,4 @@ function drawLine(lastX, lastY, newX, newY) {
   context.lineTo(newX, newY) // 绘制线条至new x，y坐标
   context.stroke() // 绘制线条
   context.closePath() // 闭合路径
-}
-
-// 默认设置canvas宽高
-function autoSetCanvasSize() {
-  // 获取页面宽高
-  var pageWith = document.documentElement.clientWidth
-  var pageHeight = document.documentElement.clientHeight
-  // 设置宽高，这时候设置的是 <canvas> 的属性值，而不是样式里的宽高
-  canvas.width = pageWith
-  canvas.height = pageHeight
 }
