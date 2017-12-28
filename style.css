@@ -1,0 +1,17 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  overflow: hidden;
+}
+.canvas{
+  background-color: #999;
+}
+.eraser{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  xborder: 1px solid red;
+  xbackground-color: red;
+}
