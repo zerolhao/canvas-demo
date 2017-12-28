@@ -1,17 +1,85 @@
-*{
+* {
   margin: 0;
   padding: 0;
 }
-body{
+
+ul,
+ol {
+  list-style: none;
+}
+
+body {
   overflow: hidden;
 }
-.canvas{
-  background-color: #999;
+
+.canvas {
+  background-color: white;
 }
-.eraser{
+
+.tools {
   position: fixed;
-  left: 0;
-  bottom: 0;
-  xborder: 1px solid red;
-  xbackground-color: red;
+  bottom: 5px;
+  left: 10%;
+  right: 10%;
+  height: 40px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 3px #999;
+  display: flex;
+  justify-content: space-around;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  margin: 4px 0;
+  vertical-align: -0.15em;
+  fill: gray;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.tools>.icon.active {
+  width: 36px;
+  height: 36px;
+  margin: 2px 0;
+  fill: #222;
+}
+
+.tools>.colorList {
+  width: 32px;
+  height: 32px;
+  margin: 4px 0;
+  overflow: hidden;
+  align-self: flex-end;
+  transition: 0.3s;
+}
+.tools>.colorList.active {
+  height: 125px;
+  overflow: initial;
+}
+.tools>.colorList li.active{
+  background-color: black;
+}
+.tools>.colorList.active li.active{
+  height: 0px;
+}
+.tools>.colorList li {
+  margin: 1px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: block;
+}
+.black{
+  background-color: black;
+}
+.red{
+  background-color: red;
+}
+.green{
+  background-color: green;
+}
+.blue{
+  background-color: blue;
 }
