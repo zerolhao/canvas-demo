@@ -181,7 +181,7 @@ function allTolls() {
   var lineWidth = document.getElementById('lineWidth')
   lineWidth.onclick = function() {
     var width = prompt("请输入画笔大小（1~9,比如：2）")
-    if(width < 9 && width > 0){
+    if(width <= 9 && width >= 1){
       setLineWidth(width)
     }else{
       return
